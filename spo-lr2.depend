@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1633041641 source:z:\sharedfolderwin10\ucheba\spo\spo-lr2\main.cpp
+1633080684 source:z:\sharedfolderwin10\ucheba\spo\spo-lr2\main.cpp
 	<iostream>
 	<windows.h>
 	<sddl.h>
@@ -10,6 +10,6 @@
 	<windows.h>
 	<sddl.h>
 
-1633038984 source:z:\sharedfolderwin10\ucheba\spo\spo-lr2\module.cpp
+1633081282 source:z:\sharedfolderwin10\ucheba\spo\spo-lr2\module.cpp
 	"module.h"
 

@@ -11,10 +11,9 @@ using namespace std;
 
 int  main()
 {
-//    string InputName; // \\.\mailslot\test
-//    cout << "Enter slot name: ";
-//    cin>> InputName;
-    string InputName="\\\\.\\mailslot\\test";
+    string InputName; // \\.\mailslot\test
+    cout << "[SYS] Enter mailslot fullpath: ";
+    cin>> InputName;
     LPCTSTR SlotName= InputName.c_str();
     HANDLE hSlot;
     bool isServer;
@@ -24,13 +23,13 @@ int  main()
     if (!cf) return -1;
 
 
-    cout << "Start session in "<< ((isServer) ? "Server" : "Client") << " mode"<< endl;
+    cout << "[SYS] Start session in "<< ((isServer) ? "Server" : "Client") << " mode"<< endl;
     string command;
+    cout << "[SYS] Commands: "<<endl<<"\t\t[check] messages"<<endl<<((isServer) ? "\t\t[read] messages" : "\t\t[write] new message") <<endl<<"\t\t[quit] prorgam"<<endl;
 
     while(TRUE)
     {
-
-        cout << "You can: "<<endl<<"\t[check] messeges"<<endl<<((isServer) ? "\t[read] messeges" : "\t[write] new messege") <<endl<<"\t[quit] prorgam"<<endl;
+        cout <<"[IN] "<< InputName <<" > ";
         cin>> command;
 
         if(command ==  "check")
@@ -41,42 +40,31 @@ int  main()
         {
             return 0;
         }
-        else if(command == "read")
+        else if((command == "read") && (isServer))
         {
-            cout<<"Im read"<<endl;
+            ReadSlot(hSlot);
         }
-        else if (command == "write")
+        else if ((command == "write") && (!isServer))
         {
-            cout<<"Im write"<<endl;
+            cout<<"[OUT] Type your message here. Type '.' in new line to terminate."<<endl;
+            string msg,line, tmp;
+
+            do
+            {
+                cin>> tmp;
+                getline(cin, line);
+                line = tmp + line;
+                msg += line +'\n';
+            }
+            while(line!=".");
+
+            WriteSlot(hSlot,(LPCTSTR)msg.c_str());
         }
         else
         {
-            cout<<"wrong"<<endl;
+            ;
         }
     }
 
-
-//    if (!isServer)
-//    {
-//        WriteSlot(hSlot, TEXT("Message one for mailslot."));
-//        WriteSlot(hSlot, TEXT("Message two for mailslot."));
-//    }
-//    else
-//    {
-//        cout<<"Reading . . ."<<endl;
-//        while(TRUE)
-//        {
-//            ReadSlot(hSlot);
-//            cin>>InputName;
-//            if(InputName == "quit")break;
-//        }
-//    }
-
-
-
-
-
-
-
-return 0;
+    return 0;
 }
